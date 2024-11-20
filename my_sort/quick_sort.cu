@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <iostream>
 #include "cuda_runtime_api.h"
-#include "/home/zht/document/CProj/cudaC/CUDA_Freshman/include/freshman.h"
+#include "E:\cproject\cuda_c\CUDA_C\include\freshman.h"
 #include <algorithm>
 
 #define MAX_DEPTH 16
