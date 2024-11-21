@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <stdio.h>
 #include <cstdio>
-#include "freshman.h"
+#include "/home/zht/document/CProj/cudaC/CUDA_Freshman/include/freshman.h"
 
 
 #define tile_size 256u
@@ -162,9 +162,9 @@ iStart=cpuSecond();
   }
  
   printf("data number: %u\n", n);
-  printf("cpu merge sort cost %.5f ms\n", elasped[0] / 1e3 / runtime);
-  printf("cpu quick sort cost %.5f ms\n", elasped[1] / 1e3 / runtime);
-  printf("gpu sort cost %.5f ms\n", elasped[2] / 1e3 / runtime);
+  printf("cpu merge sort cost %.5f sec\n", elasped[0]  / runtime);
+  printf("cpu quick sort cost %.5f sec\n", elasped[1]  / runtime);
+  printf("gpu sort cost %.5f sec\n", elasped[2]  / runtime);
   printf("-------------------------------------------\n");
  
   delete[] data;

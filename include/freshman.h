@@ -10,6 +10,8 @@
       exit(1);\
   }\
 }
+#define FLOAT_MIN -3.4028235E38
+#define FLOAT_MAX 3.4028235E38
 
 #include <random>
 #include <time.h>
@@ -20,8 +22,6 @@
 #endif
 #ifdef _WIN32
 
-#define FLOAT_MIN -3.4028235E38
-#define FLOAT_MAX 3.4028235E38
 
 int gettimeofday(struct timeval *tp, void *tzp)
 {
@@ -68,18 +68,13 @@ void initialData_int(int* ip, int size)
 		ip[i] = int(rand()&0xff);
 	}
 }
-
-void initialData_float(float* ip, int size)
+void initialData_2(float* ip,int size)
 {
-  std::random_device rd;
-  std::default_random_engine eng(rd());
-  std::uniform_real_distribution<float> distr(FLOAT_MIN, FLOAT_MAX);
   for(int i=0;i<size;i++)
   {
-    ip[i]=distr(eng);
+    ip[i]=(float)i + 1.0;
   }
 }
-
 void printMatrix(float * C,const int nx,const int ny)
 {
   float *ic=C;

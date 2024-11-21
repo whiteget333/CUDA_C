@@ -144,8 +144,8 @@ void float_sort(float *arr, int len) {
     //     cudaMemset(d_input_arr + len, 0x7f, sizeof(float) * (input_arr_len - len));
     // }
 
-    dim3 grid_dim((input_arr_len / 256 == 0)? 1 : input_arr_len / 256);
-    dim3 block_dim((input_arr_len / 256 == 0)? input_arr_len : 256);
+    dim3 grid_dim((input_arr_len / 512 == 0)? 1 : input_arr_len / 512);
+    dim3 block_dim((input_arr_len / 512 == 0)? input_arr_len : 256);
     
     // 排序过程(重点)
     for (unsigned stride = 2; stride <= input_arr_len; stride <<= 1) {
@@ -206,19 +206,20 @@ int main()
     // GPU sort
     iStart=cpuSecond();
     d_data_1 = sortdirect_gpu(d_data_1, num_items);
+    iElaps=cpuSecond()-iStart;
     // 数据传输 
     CHECK(cudaMemcpy(d_res_1, d_data_1, num_items * sizeof(float), cudaMemcpyDeviceToHost))
-    iElaps=cpuSecond()-iStart;
     printf("Device sort Time elapsed %f sec\n",iElaps);
 
     // GPU sort 2
-    // iStart=cpuSecond();
-    // float_sort(d_data_2, num_items);
-    // // 数据传输 
-    // CHECK(cudaMemcpy(d_res_2, d_data_2, num_items * sizeof(float), cudaMemcpyDeviceToHost))
-    // iElaps=cpuSecond()-iStart;
-    // printf("Device sort Time elapsed %f sec\n",iElaps);
-
+    iStart=cpuSecond();
+    float_sort(d_data_2, num_items);
+    cudaDeviceSynchronize();
+    iElaps=cpuSecond()-iStart;
+    // 数据传输 
+    CHECK(cudaMemcpy(d_res_2, d_data_2, num_items * sizeof(float), cudaMemcpyDeviceToHost))
+    printf("Device sort Time elapsed %f sec\n",iElaps);
+    
     // printf_data(d_res, num_items);
     // CPU sort
     iStart=cpuSecond();
